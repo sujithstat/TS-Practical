@@ -14,4 +14,15 @@ plot(t,yt,type = "l",main = "Plot of the time series")
 a1=acf(yt,main="Plot of the acf")
 k=a1$lag
 n=length(yt)
-se1=sqrt((n-k)/(n*(n+2)));se1
+SE=sqrt((n-k)/(n*(n+2)))
+rho=a1$acf
+Z0=rho/SE
+ztab=1.96
+test=function(zzz){
+  if (abs(zzz)<ztab) {
+    return("Do not reject")
+  } else{return("Reject")}
+}
+decision=c()
+for(i in (k+1)) decision[i] = test(Z0[i])
+tab=data.frame(k,rho,SE,Z0,decision);tab
