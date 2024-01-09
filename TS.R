@@ -26,3 +26,34 @@ test=function(zzz){
 decision=c()
 for(i in (k+1)) decision[i] = test(Z0[i])
 tab=data.frame(k,rho,SE,Z0,decision);tab
+
+
+#Practial 5
+# MA 2
+rm(list=ls())
+t=1:10
+y=c(-6.7,5.3,-7.7,-14.7,-18.7,6.3,12.3,-22.7,48.3,1.3)
+Z=function(tim,theta){
+  out=c()
+  for (i in 1:length(tim)) {
+    if (tim[i]==0) {
+      out[i]=0
+    } else {
+      out[i]=(y[tim[i]]+theta*Z(tim[i]-1,theta))
+    }
+  }
+  return(out)
+}
+
+SE=function(theta1){
+  S=sum((Z(t,theta1))^2)
+  N=length(t)
+  out=sqrt(S/N)
+  return(out)
+}
+
+thetahat=optim(0.6,SE,method = "L-BFGS-B")$par
+thetahat
+
+
+
