@@ -79,6 +79,37 @@ SE=function(theta1){
 thetahat=optim(0.6,SE,method = "L-BFGS-B")$par
 thetahat
 
+
+
+#Pract7 : Identification of MA or AR
+par(mfrow=c(1,3))
+rm(list = ls())
+yt=c(71,57,62,64,65,67,65,82,70,74,75,81,71,75,82,74,78,75,73,
+     76,66,69,63,76,65,73,62,77,76,88,71,72,66,65,73,76,81,84,
+     68,63,66,71,67,69,63,61,68,75,66,81,72,77,66,71,59,57,66,
+     51,59,56,57,55,53,74,64,70,74,69,64,68,64,70,73,59,68,59,
+     66,63,63,61,73,72,65,70,54,63,62,60,67,59,74,61,61,52,55,
+     61,56,61,60,65,55,61,59,63)
+plot(yt,main="Plot of the Time Series",xlab="t",ylab="yt",type = "l")
+acf(yt,main="Plot of acf")
+pacf(yt,main="Plot of pacf")
+#conclusion: the acf plot cuts off lag 5 after that it starts decreasing, again it starts increasing.
+#Also it has an exponential decay pattern suggesting an AR(p) model. To resolve this consider the 
+#sample pacf plot. pacf plot cuts off after lag 2, and we can conclude that the appropriate model 
+#to fit this data is AR(2) model.
+
+
+
+#Pract8 : Check whether the following is ARMA(1,1)
+par(mfrow=c(1,3))
+rm(list = ls())
+yt=c(27.19,27.13,26.12,31.68,23,15.51,18.23,13.71,15.48,13.14,15.68,19.17,26.97,31.20,25.95,20.21,29.20,27.26,28.94,32.27,24.15,18.87,16.75,30.81,25.30,20.69,29.9,26.58,22.68,20.49)
+plot(yt,main="Plot of the Time Series",xlab="t",ylab="yt",type = "l")
+acf(yt,main="Plot of acf")
+pacf(yt,main="Plot of pacf")
+
+
+
 #Pract9 #2
 rm(list = ls())
 yt=c(71,57,62,64,65,67,65,82,70,74,75,81,71,75,82,74,78,75,73,
