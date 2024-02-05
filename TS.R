@@ -55,5 +55,94 @@ SE=function(theta1){
 thetahat=optim(0.6,SE,method = "L-BFGS-B")$par
 thetahat
 
+# MA 2 (Alternative)
+rm(list=ls())
+t=1:10
+y=c(-6.7,5.3,-7.7,-14.7,-18.7,6.3,12.3,-22.7,48.3,1.3)
+ind=function(i){return(i+1)}
+Z=function(theta){
+      x=c()
+      x[ind(0)]=0
+      for (i in t) {
+        x[ind(i)]=y[i]+theta*x[ind(i-1)]
+      }
+      return(x[-1])
+}
+
+SE=function(theta1){
+  S=sum((Z(theta1))^2)
+  N=length(t)
+  out=sqrt(S/N)
+  return(out)
+}
+
+thetahat=optim(0.6,SE,method = "L-BFGS-B")$par
+thetahat
+
+#Pract9 #2
+rm(list = ls())
+yt=c(71,57,62,64,65,67,65,82,70,74,75,81,71,75,82,74,78,75,73,
+     76,66,69,63,76,65,73,62,77,76,88,71,72,66,65,73,76,81,84,
+     68,63,66,71,67,69,63,61,68,75,66,81,72,77,66,71,59,57,66,
+     51,59,56,57,55,53,74,64,70,74,69,64,68,64,70,73,59,68,59,
+     66,63,63,61,73,72,65,70,54,63,62,60,67,59,74,61,61,52,55,
+     61,56,61,60,65,55,61,59,63)
+n=length(yt)
+ind=function(i){return(i-2)}
+Z=function(p){
+  mu=p[1];phi1=p[2];phi2=p[3]
+  x=c()
+  for (i in 3:n) {
+    x[ind(i)]=(yt[i]-mu)-phi1*(yt[i-1]-mu)-phi2*(yt[i-2]-mu)
+  }
+  return(x)
+}
+
+S=function(p1){
+  out=sum((Z(p1))^2)
+  return(out)
+}
+seed=c(mean(yt),0.4,0.4)
+phat=optim(par = seed,fn = S,method = "L-BFGS-B")$par
+phat
+
+
+
+
+#### Practical 10 ######
+#### Time Differentiation 1 ####
+par(mfrow=c(1,4))
+rm(list = ls())
+yt=c(304454,316700,326372,334342,343838,350333,356195,361444,366253,372665,384773,395891,
+     407023,427330,417023,440913,458438,479938,500378,520174,547563,558563,568500,584552,
+     594518,605932,618210,627238,636442,648922,667381,684771,697570,708066,724956,746560,
+     767648,792296)
+plot(yt,main="Plot of the time series",type = "l")
+acf(yt,main="Plot of acf")
+Dyt=diff(yt,lag = 1,differences = 1)
+acf(Dyt,main="Plot of acf of difference series")
+pacf(Dyt,main="Plot of pacf of difference series")
+
+#### Practical 11 ######
+#### Time Differentiation 2 ####
+par(mfrow=c(2,3))
+rm(list = ls())
+yt=c(13.8,16.2,19.9,20.5,22.9,27.3,31.6,30.7,32.7,31.8,34.4,36.4,40.4,50.8,
+     50.9,58.9,64.9,71.9,71.8,74.6,88.6,102,95.7,103.3,107.4,126.9,127.9,118.8,
+     135.1,137.6,147.6,166.6,193.3,212.3,225.8,260.2,282.7,315.1,278.7,342,394.8,332.6,
+     135.1,137.6,147.6,166.6,193.3,112.3,225.8,260.2,282.7,315.1,465.9,568.7,415.9,422.3,
+     564.6,583.7,520.1,573.4,517.8,500.7,535,467.5,382.1,309.7,333.6,359.4,372.4,439.1,
+     444.5,348.5,394.9,460.8,514.1,582.7,590.2,819.6,577.6,533.9,630.6,599.5,437.9,
+     516.3,533.7,466.8,457.3,391.7,464.6,500.9,497.7,410.4,412,415.5,403,422.1,
+     459,487,512,533.9,552.6,545.2,560.5,602.9,552.2,595.4,591.7,603.4,648.0,
+     679,691,665,776,824)
+plot(yt,main="Plot of the time series",type = "l")
+acf(yt,main="Plot of acf",lag.max = 20)
+Dyt=diff(yt,lag = 1,differences = 1)
+acf(Dyt,main="Plot of acf of difference series",lag.max = 20)
+pacf(Dyt,main="Plot of pacf of difference series",lag.max = 20)
+D2yt=diff(yt,lag = 1,differences = 2)
+acf(D2yt,main="Plot of acf of 2nd difference series",lag.max = 20)
+pacf(D2yt,main="Plot of pacf of 2nd difference series",lag.max = 20)
 
 
