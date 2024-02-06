@@ -177,3 +177,27 @@ acf(D2yt,main="Plot of acf of 2nd difference series",lag.max = 20)
 pacf(D2yt,main="Plot of pacf of 2nd difference series",lag.max = 20)
 
 
+#Pract12
+rm(list = ls())
+muhat=12.135
+thetahat=0.377
+t=1:45
+yt=c(11.9,11.94,11.69,11.86,12.69,11.95,
+     11.9,12.09,12.03,11.99,12.11,11.98,11.71,
+     11.87,12.12,15.28,9.33,12.54,12.07,12.08,
+     12.26,12.03,12.04,11.93,12.02,12.27,
+     12.07,11.77,12.16,12.26,11.51,12.56,
+     12.20,12.38,12.46,12.21,11.83,12.08,
+     11.48,11.63,11.68,11.93,13.70,13.95,
+     11.55)
+ythat=c()
+zt=c(0)
+ind=function(i){return(i+1)}
+for (i in t) {
+  ythat[i]=muhat-thetahat*zt[ind(i-1)]
+  zt[ind(i)]=yt[i]-ythat[i]
+}
+zt=zt[-1]
+data.frame(t,yt,ythat,zt)
+yt46=muhat-thetahat*zt[45]
+yt46
