@@ -214,3 +214,158 @@ zt=zt[-1]
 data.frame(t,yt,ythat,zt)
 yt46=muhat-thetahat*zt[45]
 yt46
+
+####### Practical 13 ##########
+#1
+rm(list = ls())
+#t=1:20
+yt=c(2.59,3.10,2.68,3.79,2.75,1.02,1.39,0.60,0.93,0.45,1.01,1.51,2.88,3.72,2.91,4.61,2.48,3.14,3.51,4.17)
+ts.plot(yt)
+acf(yt)
+pacf(yt)
+model=arima(yt,order=c(1,0,0));model
+res=residuals(model)
+yt_fitted=yt-res
+ts.plot(yt)
+points(yt_fitted,type="l",col="red",lty=2)
+#acf(res)
+
+#Normality of the residuals
+qqnorm(res)
+qqline(res)
+shapiro.test(res) #H0: Data is Normal
+Box.test(res,lag=19,type = "Ljung") #H0: acfs are not significant
+
+#Forecasting
+forecast=predict(model,10)
+fr=round(forecast$pred,2)
+plot(c(yt,fr),type="o",pch=16)
+lines(yt,col="red",type="o",lty=3)
+lines(fr,col="blue",type="o",lty=3)
+
+
+#2
+rm(list = ls())
+data("Nile")
+#t=1:20
+yt=Nile
+#yt=diff(yt,differences = 2)
+ts.plot(yt)
+acf(yt)
+pacf(yt)
+#model=arima(yt,order=c(5,2,1));model
+model=arima(yt,order=c(1,0,0));model
+res=residuals(model)
+yt_fitted=yt-res
+ts.plot(yt)
+points(yt_fitted,type="l",col="red",lty=2)
+acf(res)
+
+#Normality of the residuals
+qqnorm(res)
+qqline(res)
+shapiro.test(res) #H0: Data is Normal
+Box.test(res,lag=19,type = "Ljung") #H0: acfs are not significant
+
+#Forecasting
+forecast=predict(model,10)
+fr=round(forecast$pred,2)
+plot(c(yt,fr),type="o",pch=16)
+lines(yt,col="red",type="o",lty=4)
+lines(fr,col="blue",type="o",lty=3)
+
+
+#3
+rm(list = ls())
+#t=1:45
+yt=c(11.9,11.94,11.69,11.86,12.69,11.95,11.9,12.08,
+     12.03,11.99,12.11,11.98,11.71,11.87,12.12,15.28,
+     9.33,12.54,12.07,12.08,12.26,12.03,12.04,
+     11.93,12.02,12.27,12.07,11.77,12.16,12.26,
+     11.51,12.56,12.20,12.38,12.46,12.21,11.83,
+     12.08,11.48,11.63,11.68,11.93,13.70,13.95,
+     11.55)
+ts.plot(yt)
+acf(yt)
+pacf(yt)
+model=arima(yt,order=c(0,0,1));model
+res=residuals(model)
+yt_fitted=yt-res
+ts.plot(yt)
+points(yt_fitted,type="l",col="red",lty=2)
+acf(res)
+
+#Normality of the residuals
+qqnorm(res)
+qqline(res)
+shapiro.test(res) #H0: Data is Normal
+Box.test(res,lag=19,type = "Ljung") #H0: acfs are not significant
+
+#Forecasting
+forecast=predict(model,10)
+fr=round(forecast$pred,2)
+plot(c(yt,fr),type="o",pch=16)
+lines(yt,col="red",type="o",lty=3)
+lines(fr,col="blue",type="o",lty=3)
+
+#4
+rm(list = ls())
+data("BJsales")
+#t=1:45
+yt=BJsales
+#yt=diff(yt,differences = 2)
+ts.plot(yt)
+acf(yt)
+pacf(yt)
+model=arima(yt,order=c(0,2,1));model
+res=residuals(model)
+yt_fitted=yt-res
+ts.plot(yt)
+points(yt_fitted,type="l",col="red",lty=2)
+acf(res)
+
+#Normality of the residuals
+qqnorm(res)
+qqline(res)
+shapiro.test(res) #H0: Data is Normal
+Box.test(res,lag=19,type = "Ljung") #H0: acfs are not significant
+
+#Forecasting
+forecast=predict(model,10)
+fr=round(forecast$pred,2)
+plot(c(yt,fr),type="o",pch=16)
+lines(yt,col="red",type="o",lty=3)
+lines(fr,col="blue",type="o",lty=3)
+
+
+
+#TEST
+#2
+rm(list = ls())
+data("Nile")
+#t=1:20
+yt=Nile
+#yt=diff(yt,differences = 2)
+ts.plot(yt)
+acf(yt)
+pacf(yt)
+#model=arima(yt,order=c(5,2,1));model
+model=arima(yt,order=c(1,0,0));model
+res=residuals(model)
+yt_fitted=yt-res
+ts.plot(yt)
+points(yt_fitted,type="l",col="red",lty=2)
+acf(res)
+
+#Normality of the residuals
+qqnorm(res)
+qqline(res)
+shapiro.test(res) #H0: Data is Normal
+Box.test(res,lag=19,type = "Ljung") #H0: acfs are not significant
+
+#Forecasting
+forecast=predict(model,10)
+fr=round(forecast$pred,2)
+plot(c(yt,fr),type="o",pch=16)
+lines(yt,col="red",type="o",lty=4)
+lines(fr,col="blue",type="o",lty=3)
